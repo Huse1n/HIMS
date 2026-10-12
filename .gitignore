@@ -1,0 +1,23 @@
+# Java / Maven
+target/
+*.class
+
+# Angular / Node
+node_modules/
+dist/
+.angular/
+coverage/
+
+# IntelliJ
+.idea/
+*.iml
+
+# macOS
+.DS_Store
+
+# Environment / Secrets
+.env
+.env.*
+!.env.example
+application-local.properties
+application-prod.properties
