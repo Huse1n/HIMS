@@ -1,0 +1,147 @@
+/* ===== NAVBAR ===== */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 40px;
+  background: #ffffff;
+  border-bottom: 4px solid #ffdf00;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.brand-logo {
+  background: #ffdf00;
+  color: #111111;
+  font-size: 24px;
+  font-weight: 800;
+  padding: 10px 16px;
+  border-radius: 6px;
+}
+
+.brand-subtitle {
+  font-size: 14px;
+  color: #555555;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 12px;
+
+  a {
+    padding: 12px 20px;
+    color: #222222;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #fff5b0;
+    }
+
+    &.active {
+      background: #ffdf00;
+      color: #111111;
+    }
+  }
+}
+
+/* ===== MAIN CONTENT ===== */
+
+.main-content {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 24px;
+}
+
+/* ===== APP LAYOUT ===== */
+
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content {
+  flex: 1;
+}
+
+/* ===== MODERN FOOTER ===== */
+
+.app-footer {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 22px 16px;
+  text-align: center;
+  background: #f3f5f9;
+  border-top: 1px solid #e2e8f0;
+}
+
+.app-footer .footer-text {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #64748b;
+}
+
+.app-footer .footer-name {
+  display: inline-block;
+  margin-left: 5px;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.7px;
+
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+@media (max-width: 700px) {
+  .navbar {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .navbar-brand {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .navbar-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .app-footer .footer-text {
+    font-size: 13px;
+  }
+
+  .app-footer .footer-name {
+    font-size: 15px;
+  }
+
+.logout-btn {
+  padding: 10px 20px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: #dc2626;
+  }
+}
+}

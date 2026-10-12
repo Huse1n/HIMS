@@ -1,0 +1,44 @@
+<header class="navbar">
+  <div class="navbar-brand">
+    <span class="brand-logo">HIMS</span>
+    <span class="brand-subtitle">Insurance Management System</span>
+  </div>
+
+  <nav class="navbar-links">
+    <a routerLink="/" routerLinkActive="active"
+       [routerLinkActiveOptions]="{ exact: true }">
+      Home
+    </a>
+
+    <a routerLink="/customers" routerLinkActive="active">
+      Customers
+    </a>
+
+    @if (isLoggedIn()) {
+    <button class="logout-btn" (click)="logout()">
+      Logout
+    </button>
+    }
+
+    <a routerLink="/settings" routerLinkActive="active">
+      Settings
+    </a>
+  </nav>
+</header>
+
+<main class="main-content">
+  <router-outlet />
+</main>
+
+<div class="app-layout">
+  <main class="app-content">
+    <router-outlet />
+  </main>
+</div>
+
+<footer class="app-footer">
+  <span class="footer-text">
+    Designed & Developed by
+    <span class="footer-name">Huseyn Mammadli</span>
+  </span>
+</footer>

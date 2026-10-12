@@ -1,0 +1,76 @@
+<div class="customer-container">
+
+  <div class="customer-header">
+    <h2>Customer Management</h2>
+
+    @if (isAdmin()) {
+    <button class="add-btn" (click)="addCustomer()">
+      + Add Customer
+    </button>
+    }
+  </div>
+
+  @if (showForm() && isAdmin()) {
+  <app-customer-form
+    [customer]="selectedCustomer()"
+    (customerCreated)="onCustomerSaved()"
+    (cancelled)="closeForm()"
+  />
+  }
+
+  @if (loading()) {
+  <p>Loading customers...</p>
+  } @else if (error()) {
+  <p class="error">{{ error() }}</p>
+  } @else {
+
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+
+      @if (isAdmin()) {
+      <th>Actions</th>
+      }
+    </tr>
+    </thead>
+
+    <tbody>
+    @for (customer of customers(); track customer.id) {
+    <tr>
+      <td>{{ customer.id }}</td>
+      <td>{{ customer.firstName }}</td>
+      <td>{{ customer.lastName }}</td>
+      <td>{{ customer.email }}</td>
+
+      @if (isAdmin()) {
+      <td>
+        <button
+          class="edit-btn"
+          (click)="editCustomer(customer)">
+          Edit
+        </button>
+
+        <button
+          class="delete-btn"
+          (click)="deleteCustomer(customer)">
+          Delete
+        </button>
+      </td>
+      }
+    </tr>
+    } @empty {
+    <tr>
+      <td [attr.colspan]="isAdmin() ? 5 : 4">
+        No customers found.
+      </td>
+    </tr>
+    }
+    </tbody>
+  </table>
+  }
+
+</div>

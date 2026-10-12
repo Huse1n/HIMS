@@ -21,3 +21,4 @@ coverage/
 !.env.example
 application-local.properties
 application-prod.properties
+frontend/hims-web/.git-backup/

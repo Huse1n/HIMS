@@ -1,0 +1,37 @@
+<div class="login-container">
+  <div class="login-card">
+    <h1>HIMS</h1>
+    <p>Customer Management System</p>
+
+    <h2>Login</h2>
+
+    <form (ngSubmit)="onLogin()">
+      <label for="username">Username</label>
+      <input
+        id="username"
+        type="text"
+        name="username"
+        [(ngModel)]="username"
+        autocomplete="username"
+        required
+      />
+
+      <label for="password">Password</label>
+      <input
+        id="password"
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        autocomplete="current-password"
+        required
+      />
+
+      @if (errorMessage) {
+      <p class="error-message">{{ errorMessage }}</p>
+      }
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Signing in...' : 'Sign In' }}
+      </button>
+    </form>
+  </div>
+</div>

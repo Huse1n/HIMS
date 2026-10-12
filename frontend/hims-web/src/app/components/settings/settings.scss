@@ -1,0 +1,81 @@
+.settings {
+  h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    color: #666;
+    margin-bottom: 30px;
+  }
+}
+
+.settings-card {
+  background: #fff;
+  padding: 28px;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  margin-bottom: 24px;
+
+  h2 {
+    font-size: 20px;
+    margin: 0 0 24px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid #ffdf00;
+  }
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px 0;
+  border-bottom: 1px solid #eee;
+
+  span {
+    color: #666;
+  }
+
+  strong {
+    text-align: right;
+  }
+}
+
+.online {
+  color: #16803c;
+}
+
+.offline {
+  color: #c62828;
+}
+
+button {
+  margin-top: 24px;
+  padding: 12px 20px;
+  background: #ffdf00;
+  color: #111;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: #f0d000;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+@media (max-width: 600px) {
+  .info-row {
+    flex-direction: column;
+    gap: 6px;
+
+    strong {
+      text-align: left;
+    }
+  }
+}

@@ -1,0 +1,61 @@
+<section class="settings">
+
+  <h1>Settings</h1>
+  <p class="subtitle">Application configuration and system information</p>
+
+  <div class="settings-card">
+    <h2>Application Information</h2>
+
+    <div class="info-row">
+      <span>Application</span>
+      <strong>HIMS</strong>
+    </div>
+
+    <div class="info-row">
+      <span>Full Name</span>
+      <strong>HUK Insurance Management System</strong>
+    </div>
+
+    <div class="info-row">
+      <span>Frontend</span>
+      <strong>Angular 22</strong>
+    </div>
+
+    <div class="info-row">
+      <span>Backend</span>
+      <strong>Spring Boot</strong>
+    </div>
+
+    <div class="info-row">
+      <span>Database</span>
+      <strong>PostgreSQL</strong>
+    </div>
+  </div>
+
+  <div class="settings-card">
+    <h2>Backend Connection</h2>
+
+    <div class="info-row">
+      <span>API Endpoint</span>
+      <strong>localhost:8081</strong>
+    </div>
+
+    <div class="info-row">
+      <span>Connection Status</span>
+
+      @if (checking()) {
+      <strong>Checking...</strong>
+      } @else {
+      <strong [class.online]="backendOnline()"
+              [class.offline]="!backendOnline()">
+        {{ backendOnline() ? 'Connected' : 'Disconnected' }}
+      </strong>
+      }
+    </div>
+
+    <button (click)="checkConnection()" [disabled]="checking()">
+      {{ checking() ? 'Checking...' : 'Test Connection' }}
+    </button>
+  </div>
+
+</section>

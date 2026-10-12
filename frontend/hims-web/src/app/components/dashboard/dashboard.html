@@ -1,0 +1,44 @@
+<section class="dashboard">
+
+  <div class="welcome">
+    <h1>Welcome to HIMS</h1>
+    <p>HUK Insurance Management System - Dashboard</p>
+  </div>
+
+  <div class="dashboard-cards">
+
+    <div class="card">
+      <h3>Total Customers</h3>
+
+      @if (loading()) {
+      <p class="card-value">Loading...</p>
+      } @else if (backendOnline()) {
+      <p class="card-value">{{ totalCustomers() }}</p>
+      } @else {
+      <p class="card-value">Unavailable</p>
+      }
+    </div>
+
+    <div class="card">
+      <h3>Backend Status</h3>
+
+      @if (loading()) {
+      <p class="card-value">Checking...</p>
+      } @else {
+      <p class="card-value" [class.online]="backendOnline()"
+         [class.offline]="!backendOnline()">
+        {{ backendOnline() ? 'Online' : 'Offline' }}
+      </p>
+      }
+    </div>
+
+    <div class="card">
+      <h3>Quick Actions</h3>
+      <a routerLink="/customers" class="action-button">
+        Manage Customers →
+      </a>
+    </div>
+
+  </div>
+
+</section>

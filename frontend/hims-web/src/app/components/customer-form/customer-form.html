@@ -1,0 +1,48 @@
+<div class="form-container">
+
+  <h3>{{ customer ? 'Edit Customer' : 'Add New Customer' }}</h3>
+
+  <form (ngSubmit)="saveCustomer()">
+
+    <label>First Name</label>
+    <input
+      type="text"
+      name="firstName"
+      [(ngModel)]="firstName"
+      required
+    />
+
+    <label>Last Name</label>
+    <input
+      type="text"
+      name="lastName"
+      [(ngModel)]="lastName"
+      required
+    />
+
+    <label>Email</label>
+    <input
+      type="email"
+      name="email"
+      [(ngModel)]="email"
+      required
+      email
+    />
+
+    @if (error()) {
+    <p class="error">{{ error() }}</p>
+    }
+
+    <div class="actions">
+      <button type="submit" [disabled]="saving()">
+        {{ saving() ? 'Saving...' : (customer ? 'Update Customer' : 'Save Customer') }}
+      </button>
+
+      <button type="button" class="cancel-btn" (click)="cancelled.emit()">
+        Cancel
+      </button>
+    </div>
+
+  </form>
+
+</div>
