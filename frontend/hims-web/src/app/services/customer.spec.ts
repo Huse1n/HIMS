@@ -16,7 +16,7 @@ describe('CustomerService', () => {
   let service: CustomerService;
   let httpMock: HttpTestingController;
 
-  const apiUrl = 'http://localhost:8081/api/customers';
+  const apiUrl = '/api/customers';
 
   const mockCustomer: Customer = {
     id: 1,
