@@ -1,4 +1,4 @@
-# HIMS — Customer Management System
+# HIMS - Customer Management System
 
 HIMS is a full-stack customer management application built with
 Spring Boot, Angular, and PostgreSQL.
