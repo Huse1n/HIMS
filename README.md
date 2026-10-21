@@ -456,7 +456,7 @@ The CI pipeline runs on:
 3. Execute Angular tests.
 4. Build the frontend.
 
-Configuration:
+Configuration: 
 
 `.github/workflows/ci.yml`
 
