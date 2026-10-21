@@ -17,6 +17,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
+import org.springframework.beans.factory.annotation.Value;
 
 @Configuration
 public class SecurityConfig {
@@ -32,6 +33,15 @@ public class SecurityConfig {
                         .hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/api/customers/**")
                         .hasRole("ADMIN")
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/policies/quote"
+                        ).hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/policies/**")
+                        .hasAnyRole("USER", "ADMIN")
+
+                        .requestMatchers("/api/policies/**")
+                        .hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults());
@@ -40,15 +50,10 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-        String adminPassword = System.getenv("HIMS_ADMIN_PASSWORD");
-        String userPassword = System.getenv("HIMS_USER_PASSWORD");
-
-        if (adminPassword == null || userPassword == null) {
-            throw new IllegalStateException(
-                    "HIMS_ADMIN_PASSWORD and HIMS_USER_PASSWORD must be set"
-            );
-        }
+    public UserDetailsService userDetailsService(
+            PasswordEncoder encoder,
+            @Value("${HIMS_ADMIN_PASSWORD}") String adminPassword,
+            @Value("${HIMS_USER_PASSWORD}") String userPassword) {
 
         return new InMemoryUserDetailsManager(
                 User.withUsername("admin")

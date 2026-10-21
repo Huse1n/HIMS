@@ -130,18 +130,29 @@
     font-size: 15px;
   }
 
-.logout-btn {
-  padding: 10px 20px;
-  background: #ef4444;
-  color: white;
+/* ===== LOGOUT BUTTON ===== */
+
+.navbar-links .logout-btn {
+  padding: 12px 20px;
+  background: #111111;
+  color: #ffffff;
   border: none;
   border-radius: 6px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.2s;
 
-  &:hover {
-    background: #dc2626;
-  }
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.navbar-links .logout-btn:hover {
+  background: #333333;
+}
+
+.navbar-links .logout-btn:focus-visible {
+  outline: 3px solid #ffdf00;
+  outline-offset: 3px;
 }
 }

@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 
 import { CustomerList } from './components/customer-list/customer-list';
 import { Dashboard } from './components/dashboard/dashboard';
+import { InsurancePage } from './insurance/insurance-page/insurance-page';
 import { Settings } from './components/settings/settings';
 import { Login } from './pages/login/login';
 
@@ -25,6 +26,11 @@ export const routes: Routes = [
   {
     path: 'customers',
     component: CustomerList,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'insurance',
+    component: InsurancePage,
     canActivate: [authGuard]
   },
   {

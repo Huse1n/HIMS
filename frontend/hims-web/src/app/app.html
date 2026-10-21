@@ -5,6 +5,7 @@
   </div>
 
   <nav class="navbar-links">
+
     <a routerLink="/" routerLinkActive="active"
        [routerLinkActiveOptions]="{ exact: true }">
       Home
@@ -14,21 +15,26 @@
       Customers
     </a>
 
-    @if (isLoggedIn()) {
-    <button class="logout-btn" (click)="logout()">
-      Logout
-    </button>
-    }
+    <a routerLink="/insurance" routerLinkActive="active">
+      Insurance
+    </a>
 
     <a routerLink="/settings" routerLinkActive="active">
       Settings
     </a>
+
+    @if (isLoggedIn()) {
+    <button
+      type="button"
+      class="logout-btn"
+      (click)="logout()"
+    >
+      Logout
+    </button>
+    }
+
   </nav>
 </header>
-
-<main class="main-content">
-  <router-outlet />
-</main>
 
 <div class="app-layout">
   <main class="app-content">

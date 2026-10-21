@@ -1,0 +1,324 @@
+<div class="insurance-page">
+
+  <h1>Kfz-Versicherungsverwaltung</h1>
+  <p>HIMS – {{ productName }}</p>
+
+  <!-- Meldungen -->
+  <div *ngIf="errorMessage" class="alert error">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="successMessage" class="alert success">
+    {{ successMessage }}
+  </div>
+
+  <!-- NEUER VERTRAG -->
+  <section class="card">
+
+    <h2>
+      {{ editingPolicyId === null
+      ? 'Neuen Versicherungsvertrag erstellen'
+      : 'Versicherungsvertrag bearbeiten' }}
+    </h2>
+
+    <form (ngSubmit)="savePolicy()">
+
+      <!-- Kunde -->
+      <h3>1. Kunde auswählen</h3>
+
+      <label for="customer">Kunde</label>
+
+      <select
+        id="customer"
+        name="customerId"
+        [(ngModel)]="customerId"
+        required>
+
+        <option [ngValue]="null">Bitte auswählen</option>
+
+        <option
+          *ngFor="let customer of customers"
+          [ngValue]="customer.id">
+          {{ customer.firstName }} {{ customer.lastName }}
+        </option>
+
+      </select>
+
+      <!-- Fahrzeug -->
+      <h3>2. Fahrzeugdaten</h3>
+
+      <label for="manufacturer">Hersteller</label>
+      <input
+        id="manufacturer"
+        name="vehicleManufacturer"
+        [(ngModel)]="vehicleManufacturer"
+        placeholder="z. B. Volkswagen"
+        required>
+
+      <label for="model">Modell</label>
+      <input
+        id="model"
+        name="vehicleModel"
+        [(ngModel)]="vehicleModel"
+        placeholder="z. B. Golf"
+        required>
+
+      <label for="licensePlate">Kennzeichen</label>
+      <input
+        id="licensePlate"
+        name="licensePlate"
+        [(ngModel)]="licensePlate"
+        placeholder="CO-AB-123"
+        required>
+
+      <label for="registrationYear">Erstzulassungsjahr</label>
+      <input
+        id="registrationYear"
+        type="number"
+        name="firstRegistrationYear"
+        [(ngModel)]="firstRegistrationYear"
+        min="1900"
+        required>
+
+      <!-- Versicherung -->
+      <h3>3. Versicherungsschutz</h3>
+
+      <div class="tariff-options">
+
+        <label>
+          <input
+            type="radio"
+            name="insuranceType"
+            value="LIABILITY"
+            [(ngModel)]="insuranceType"
+            (ngModelChange)="calculatePremium()">
+
+          Haftpflicht – 300 €/Jahr
+        </label>
+
+        <label>
+          <input
+            type="radio"
+            name="insuranceType"
+            value="PARTIAL_COVERAGE"
+            [(ngModel)]="insuranceType"
+            (ngModelChange)="calculatePremium()">
+
+          Teilkasko – 450 €/Jahr
+        </label>
+
+        <label>
+          <input
+            type="radio"
+            name="insuranceType"
+            value="FULL_COVERAGE"
+            [(ngModel)]="insuranceType"
+            (ngModelChange)="calculatePremium()">
+
+          Vollkasko – 650 €/Jahr
+        </label>
+
+      </div>
+
+      <!-- Zusatzleistung -->
+      <h3>4. Zusatzleistung</h3>
+
+      <label>
+        <input
+          type="checkbox"
+          name="roadsideAssistance"
+          [(ngModel)]="roadsideAssistance"
+          (ngModelChange)="calculatePremium()">
+
+        Kfz-Schutzbrief (+30 €/Jahr)
+      </label>
+
+      <!-- Zahlungsweise -->
+      <h3>5. Zahlungsweise</h3>
+
+      <select
+        name="paymentFrequency"
+        [(ngModel)]="paymentFrequency"
+        (ngModelChange)="calculatePremium()">
+
+        <option value="YEARLY">
+          Jährlich (0 % Zuschlag)
+        </option>
+
+        <option value="HALF_YEARLY">
+          Halbjährlich (3 % Zuschlag)
+        </option>
+
+        <option value="QUARTERLY">
+          Vierteljährlich (5 % Zuschlag)
+        </option>
+
+      </select>
+
+      <!-- Beitragsberechnung -->
+      <div class="premium-box">
+
+        <h3>Ihr Versicherungsbeitrag</h3>
+
+        <p *ngIf="calculating">
+          Beitrag wird berechnet ...
+        </p>
+
+        <div *ngIf="premiumQuote && !calculating">
+
+          <p>
+            Grundbeitrag:
+            {{ premiumQuote.basePremium | number:'1.2-2' }} €
+          </p>
+
+          <p>
+            Gesamtbeitrag pro Jahr:
+            <strong>
+              {{ premiumQuote.annualPremium | number:'1.2-2' }} €
+            </strong>
+          </p>
+
+          <h2>
+            {{ premiumQuote.installmentAmount | number:'1.2-2' }} €
+          </h2>
+
+          <p>
+            {{ getPaymentFrequencyLabel(paymentFrequency) }}
+          </p>
+
+          <small>
+            Unverbindliche Demo-Berechnung.
+            Keine offiziellen HUK-COBURG-Tarife.
+          </small>
+
+        </div>
+
+      </div>
+
+      <!-- Vertragsbeginn -->
+      <h3>6. Vertragsbeginn</h3>
+
+      <label for="startDate">Versicherungsbeginn</label>
+
+      <input
+        id="startDate"
+        type="date"
+        name="startDate"
+        [(ngModel)]="startDate"
+        required>
+
+      <!-- Speichern -->
+      <div class="form-actions">
+
+        <button
+          type="submit"
+          [disabled]="saving || calculating || !premiumQuote">
+
+          {{ saving
+          ? 'Wird gespeichert ...'
+          : editingPolicyId === null
+          ? 'Vertrag erstellen'
+          : 'Änderungen speichern' }}
+
+        </button>
+
+        <button
+          *ngIf="editingPolicyId !== null"
+          type="button"
+          (click)="cancelEdit()">
+          Abbrechen
+        </button>
+
+      </div>
+
+    </form>
+
+  </section>
+
+  <!-- VERTRAGSÜBERSICHT -->
+  <section class="card">
+
+    <h2>Bestehende Versicherungsverträge</h2>
+
+    <p *ngIf="loading">Verträge werden geladen ...</p>
+
+    <p *ngIf="!loading && policies.length === 0">
+      Noch keine Versicherungsverträge vorhanden.
+    </p>
+
+    <div class="table-wrapper"
+         *ngIf="!loading && policies.length > 0">
+
+      <table>
+
+        <thead>
+        <tr>
+          <th>Vertragsnummer</th>
+          <th>Kunde-ID</th>
+          <th>Fahrzeug</th>
+          <th>Versicherung</th>
+          <th>Zahlungsweise</th>
+          <th>Jahresbeitrag</th>
+          <th>Status</th>
+          <th>Aktion</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr *ngFor="let policy of policies">
+
+          <td>{{ policy.policyNumber }}</td>
+
+          <td>{{ policy.customerId }}</td>
+
+          <td>
+            {{ policy.vehicleManufacturer }}
+            {{ policy.vehicleModel }}
+          </td>
+
+          <td>
+            {{ getInsuranceTypeLabel(policy.insuranceType) }}
+          </td>
+
+          <td>
+            {{ getPaymentFrequencyLabel(policy.paymentFrequency) }}
+          </td>
+
+          <td>
+            {{ policy.annualPremium | number:'1.2-2' }} €
+          </td>
+
+          <td>{{ policy.status }}</td>
+
+          <td>
+            <button
+              type="button"
+              (click)="downloadPdf(policy)">
+              PDF
+            </button>
+
+            <button
+              type="button"
+              (click)="editPolicy(policy)">
+              Bearbeiten
+            </button>
+
+            <button
+              type="button"
+              (click)="deletePolicy(policy)">
+              Löschen
+            </button>
+          </td>
+
+        </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+</div>
