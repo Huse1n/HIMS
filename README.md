@@ -1,4 +1,4 @@
-# HIMS – Insurance Management System
+# HIMS - Insurance Management System
 
 HIMS is a full-stack insurance management application developed with **Java 21, Spring Boot, Angular 22, TypeScript, PostgreSQL, and Docker**.
 
